@@ -2,7 +2,24 @@
   "name": "market-place-backend",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/muhamood/market-place-backend.git",
-  "author": "<aggrey256@gmail.com>",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhamood/market-place-backend.git"
+  },
+  "author": " <aggrey256@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "description": "A backend API for a market Place built using Node Express",
+  "bugs": {
+    "url": "https://github.com/muhamood/market-place-backend/issues"
+  },
+  "homepage": "https://github.com/muhamood/market-place-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
