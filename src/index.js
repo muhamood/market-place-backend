@@ -1,6 +1,13 @@
 const app = require('./app');
 
-const port = 3000;
+const {database} = require('./db/db')
+
+
+database().then(() => {
+
+console.log("connection success");
+
+ const port = 3000;
 
 app.get('/', (req, res)=>{
        res.send('hello world!');
@@ -8,5 +15,10 @@ app.get('/', (req, res)=>{
 });
 
 app.listen(port, ()=> console.log(`Server running on ${port}`));
+       
+}).catch(console.log);
+
+
+
 
 
