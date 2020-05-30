@@ -6,5 +6,6 @@ const connection = () => mongoose.connect('mongodb://localhost/test', {
     })
 
 module.exports = {
-    db: connection
+    database: connection,
+
 }
