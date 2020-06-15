@@ -1,5 +1,7 @@
 const app = require('./app');
 const authRouter = require('./auth');
+const itemRouter = require('./item');
+
 const {
     database
 } = require('./db/db')
@@ -17,6 +19,7 @@ database().then(() => {
     });
 
     app.use('/', authRouter);
+    app.use('/', itemRouter);
 
     app.listen(port, () => console.log(`Server running on ${port}`));
 
