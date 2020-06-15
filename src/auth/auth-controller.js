@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-const {SECRET_KEY} = require('../config')
+const {
+    SECRET_KEY
+} = require('../config')
 const User = require("../db/user");
-
-
 
 
 const signUp = async(req, res, next) => {
@@ -35,41 +35,43 @@ const signUp = async(req, res, next) => {
 const userLogin = async(req, res, next) => {
 
 
-    try {
+        try {
 
-        const user = await User.findOne({
-            email: req.body.email
-        });
-
-        // check if user then check password
-        if (user && user.password == req.body.password) {
-        	const token = await jwt.sign({id: user._id, email: user.email}, SECRET_KEY);
-            return res.send({
-                success: true,
-                message: "Login Succesful",
-                user,
-                token
-
+            const user = await User.findOne({
+                email: req.body.email
             });
+
+            // check if user then check password
+            if (user && user.password == req.body.password) {
+                const token = await jwt.sign({
+                    id: user._id,
+                    email: user.email
+                }, SECRET_KEY);
+                return res.send({
+                    success: true,
+                    message: "Login Succesful",
+                    user,
+                    token
+
+                });
+            }
+
+            return res.status(!user ? 404 : 403).send({
+                success: false,
+                message: "Login unSuccesful"
+            });
+
+
+        } catch (e) {
+
+            return res.send({
+                success: false,
+                message: e.message || "Login UnSuccesful"
+            })
+
         }
-
-        return res.status(!user ? 404 : 403).send({
-            success: false,
-            message: "Login unSuccesful"
-        });
-
-
-    } catch (e) {
-
-        return res.send({
-            success: false,
-            message: e.message || "Login UnSuccesful"
-        })
-
     }
-}
-
-// const token = jwt.sign(payload, private, [options, call back]);
+    // const token = jwt.sign(payload, private, [options, call back]);
 
 
 
