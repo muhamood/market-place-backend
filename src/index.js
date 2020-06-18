@@ -19,7 +19,7 @@ database().then(() => {
     });
 
     app.use('/', authRouter);
-    app.use('/', itemRouter);
+    app.use('/items', itemRouter);
 
     app.listen(port, () => console.log(`Server running on ${port}`));
 
