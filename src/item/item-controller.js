@@ -1,5 +1,31 @@
 const Item = require('../db/item');
 
+
+const getItems = async(request, response, next) => {
+
+
+    try {
+        const items = await Item.find();
+
+        response.send({
+            success: true,
+            message: "items retrieved successfully",
+            items
+        });
+
+    } catch (e) {
+        
+        response.send({
+            success: false,
+            message: "items not found"
+
+        })
+
+    }
+
+}
+
+
 const getItem = async(request, response, next) => {
 
 
@@ -91,9 +117,10 @@ const updateItem = async(request, response, next) => {
 
 
 const deleteItem = async(request, response, next) => {
-    try{
+    
 
     	const items = await Item.findByIdAndRemove(request.params.id);
+
         if(!items){
         	response.status(404).send({
         		message:"item doesnot exist"
@@ -103,20 +130,13 @@ const deleteItem = async(request, response, next) => {
    	success:true,
    	message:"Item deleted successfully"
 
-   })
-    } catch(e){
-    	response.send({
-    		success: false,
-    		message:e.message || "item not deleted"
-    	})
-    }
-
-	
+   });
+    
 
 }
 
 module.exports = {
-
+    getItems,
     getItem,
     createItem,
     updateItem,
