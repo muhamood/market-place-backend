@@ -19,6 +19,10 @@ const ItemSchema = new Schema({
     imageUrl: {
         type: String,
         required: true,
+    },
+    created_by:{
+        type: String,
+        required:true
     }
 
 })

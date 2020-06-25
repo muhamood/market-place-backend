@@ -48,7 +48,7 @@ const getOrder = async(request, response, next) => {
     try {
         const orders = await Order.find({
             _id: request.params.id
-        });
+        }).populate('username');
 
       if(!orders){
       	response.status(404).send({message:"order not found"})
@@ -56,7 +56,8 @@ const getOrder = async(request, response, next) => {
         response.send({
             success: true,
             message: "Order retrieved",
-            orders
+            orders,
+            ordered_by
         })
 
     } catch (e) {

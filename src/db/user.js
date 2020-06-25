@@ -9,7 +9,9 @@ const UserSchema = new Schema({
         unique: true
     },
     username: {
-        type: String
+        type: String,
+        ref:"Order",
+        ref:"Item" 
     },
     password: {
         type: String
@@ -26,6 +28,7 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     }
+
 })
 
 const User = mongoose.model("User", UserSchema);
