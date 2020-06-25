@@ -5,12 +5,12 @@ const getItems = async(request, response, next) => {
 
 
     try {
-        const items = await Item.find();
+        const item = await Item.find();
 
         response.send({
             success: true,
             message: "items retrieved successfully",
-            items
+            item
         });
 
     } catch (e) {
@@ -30,11 +30,11 @@ const getItem = async(request, response, next) => {
 
 
     try {
-        const items = await Item.find({
+        const item = await Item.find({
             _id: request.params.id
         }).populate('username');
 
-        if (!items) {
+        if (!item) {
             response.status(404).send({
                 message: "item not found"
             })
@@ -43,15 +43,15 @@ const getItem = async(request, response, next) => {
         response.send({
             success: true,
             message: "item retrieved successfully",
-            items, 
-            created_by
+            item
+
         });
 
     } catch (e) {
         
         response.send({
             success: false,
-            message: e.message || `item with id ${_id} not found`,
+            message: `item with id ${request.params.id} not found`,
 
         })
 
@@ -62,12 +62,12 @@ const getItem = async(request, response, next) => {
 
 const createItem = async(request, response, next) => {
 
-    const items = new Item(request.body);
+    const item = new Item(request.body);
 
     try {
-        await items.save();
+        await item.save();
 
-        if (!items) {
+        if (!item) {
             response.status(404).send({
                 message: "item not saved"
             })
@@ -76,13 +76,13 @@ const createItem = async(request, response, next) => {
         response.send({
             success: true,
             message: "Item created successfully",
-            items
+            item
         })
 
     } catch (e) {
         response.send({
             success: false,
-            message: "some field required is missing.."
+            message: "some field required is missing / item already exists .."
         })
     }
 
@@ -91,11 +91,11 @@ const createItem = async(request, response, next) => {
 const updateItem = async(request, response, next) => {
 
     try {
-        const items = await Item.findByIdAndUpdate(request.params.id, request.body, {
+        const item = await Item.findByIdAndUpdate(request.params.id, request.body, {
             new: true
         });
 
-        if (!items) {
+        if (!item) {
             response.status(404).send({
                 message: "Item doesnot exist"
             })
@@ -104,7 +104,7 @@ const updateItem = async(request, response, next) => {
         response.send({
             success: true,
             message: "item updated successfully",
-            items
+            item
         })
     } catch (e) {
         response.send({
@@ -120,9 +120,9 @@ const updateItem = async(request, response, next) => {
 const deleteItem = async(request, response, next) => {
     
 
-    	const items = await Item.findByIdAndRemove(request.params.id);
+    	const item = await Item.findByIdAndRemove(request.params.id);
 
-        if(!items){
+        if(!item){
         	response.status(404).send({
         		message:"item doesnot exist"
         	})
