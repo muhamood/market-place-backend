@@ -27,8 +27,12 @@ const OrderSchema = new Schema({
     order_status:{
 
     	type: String, default:'pending'
+    },
+    ordered_by: {
+        type: String,
+        required:true
     }
- 
+
 });
 
 const Order = mongoose.model("Order", OrderSchema);
