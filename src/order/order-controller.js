@@ -2,15 +2,15 @@ const Order = require('../db/order');
 
 const createOrder = async(request, response, next) => {
 
-    const orders = new Order(request.body);
+    const order = new Order(request.body);
     try {
 
-        await orders.save();
+        await order.save();
 
         response.send({
             success: true,
             message: "Order placed successfully",
-            orders
+            order
         })
     } catch (e) {
         response.send({
@@ -24,18 +24,18 @@ const createOrder = async(request, response, next) => {
 const getOrders = async(request, response, next) => {
 
     try {
-        const orders = await Order.find();
+        const order = await Order.find();
 
         response.send({
             success: true,
             message: "Orders retrieved",
-            orders
+            order
         })
 
     } catch (e) {
         response.send({
             success: false,
-            message: "Orders not found",
+            message: "Order not found",
 
         })
 
@@ -46,18 +46,18 @@ const getOrders = async(request, response, next) => {
 const getOrder = async(request, response, next) => {
 
     try {
-        const orders = await Order.find({
+        const order = await Order.find({
             _id: request.params.id
         }).populate('username');
 
-      if(!orders){
+      if(!order){
       	response.status(404).send({message:"order not found"})
       }
         response.send({
             success: true,
             message: "Order retrieved",
-            orders,
-            ordered_by
+            order
+            
         })
 
     } catch (e) {
@@ -75,18 +75,18 @@ const updateOrder = async(request, response, next) => {
 
     try {
 
-        const orders = await Order.findByIdAndUpdate(request.params.id, request.body, {
+        const order = await Order.findByIdAndUpdate(request.params.id, request.body, {
             new: true
         });
          
-         if(!orders){
+         if(!order){
       	response.status(404).send({message:"order doesnot exist"})
       }
 
         response.send({
             success: true,
             message: "order updated successfully",
-            orders
+            order
         })
     } catch (e) {
 
@@ -102,9 +102,9 @@ const deleteOrder = async(request, response, next) => {
 
        try{
 
-           const orders = await Order.findByIdAndDelete(request.params.id);
+           const order = await Order.findByIdAndDelete(request.params.id);
 
-            if (!orders) {
+            if (!order) {
                 response.status(404).send({
                     message: "order not found"
                 })
